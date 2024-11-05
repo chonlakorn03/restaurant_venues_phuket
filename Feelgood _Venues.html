@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แนะนำสถานบันเทิงในภูเก็ต</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #e9ecef, #f8f9fa);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .venue-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .venue-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .venue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+        .venue-card img {
+            width: 100%;
+            height: 200px; /* กำหนดความสูงคงที่ของรูปภาพ */
+            object-fit: cover;
+        }
+        .venue-card h2 {
+            margin: 0;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+        }
+        .venue-card p {
+            padding: 15px;
+            color: #555;
+            flex-grow: 1;
+            text-align: center; /* จัดข้อความให้อยู่กลาง */
+        }
+        .venue-card .button {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin: 15px;
+            display: block;
+        }
+        .venue-card .button:hover {
+            background-color: #0056b3;
+        }
+        .map-link {
+            display: block;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px;
+            transition: background-color 0.3s;
+        }
+        .map-link:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>ร้านอาหารแนะนำในภูเก็ต</h1>
+    <div class="venue-list">
+        <div class="venue-card">
+            <img src="The_Column.jpg" alt="The Column">
+            <h2>The Column</h2>
+            <p>ร้านอาหารที่มีบรรยากาศหรูหรา เสิร์ฟอาหารไทยและนานาชาติ</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=The+Column" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="venue-card">
+            <img src="sewana.jpg" alt="เสวนา">
+            <h2>เสวนา</h2>
+            <p>บรรยากาศสบายๆ กับเมนูอาหารไทยรสเด็ด</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=เสวนา" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="venue-card">
+            <img src="Ploenchit.jpg" alt="เพลินจิต">
+            <h2>เพลินจิต</h2>
+            <p>ร้านอาหารที่โดดเด่นด้วยการบริการและรสชาติที่เป็นเอกลักษณ์</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=เพลินจิต" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="venue-card">
+            <img src="MoulinRouge_Phuket.jpg" alt="Moulin Rouge Phuket">
+            <h2>Moulin Rouge Phuket</h2>
+            <p>สัมผัสประสบการณ์ที่น่าตื่นเต้นกับการแสดงและอาหารที่อร่อย</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Moulin+Rouge+Phuket" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="venue-card">
+            <img src="Sally.jpg" alt="Lilly's Aussie Bar">
+            <h2>Lilly's Aussie Bar</h2>
+            <p>บาร์สไตล์ออสเตรเลีย เสิร์ฟเครื่องดื่มและอาหารที่หลากหลาย</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Lilly's+Aussie+Bar" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="venue-card">
+            <img src="Zimplex.jpg" alt="Zimplex Mixology Laboratory">
+            <h2>Zimplex Mixology Laboratory</h2>
+            <p>ห้องทดลองค็อกเทลที่มีเอกลักษณ์ รังสรรค์เครื่องดื่มสุดพิเศษ</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Zimplex+Mixology+Laboratory" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="venue-card">
+            <img src="QuipSky_Bar.jpg" alt="Quip Sky Bar">
+            <h2>Quip Sky Bar</h2>
+            <p>ดื่มด่ำกับวิวที่สวยงามของภูเก็ตในบรรยากาศที่หรูหรา</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Quip+Sky+Bar" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+    </div>
+</body>
+</html>

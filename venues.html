@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แผนที่สถานบันเทิงในภูเก็ต</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    /* Header styling */
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Map section */
+    #map {
+      height: 800px; /* ความสูงของแผนที่เพิ่มขึ้น */
+      width: 100%; /* ตั้งความกว้างเป็น 100% เพื่อให้ตอบสนองได้ดีขึ้น */
+      max-width: 1000px; /* ความกว้างสูงสุด */
+      margin: 20px auto; /* กึ่งกลาง */
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Popup styling */
+    .leaflet-popup-content-wrapper {
+      background-color: #fefefe;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .leaflet-popup-content {
+      margin: 8px 12px;
+      line-height: 1.6;
+    }
+
+    /* Zoom button styling */
+    .leaflet-control-zoom {
+      border-radius: 4px;
+    }
+
+    /* Back to Home button styling */
+    .back-to-home {
+      display: block;
+      margin: 20px auto;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      max-width: 200px;
+      font-size: 18px; /* ขนาดตัวอักษรที่เพิ่มขึ้นเพื่อความชัดเจน */
+    }
+
+    .back-to-home:hover { 
+      background-color: #2980b9; 
+    }
+
+    /* Loading spinner styling */
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #ccc;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      z-index: 1000;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    แผนที่สถานบันเทิงในภูเก็ต
+  </header>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" id="loading-spinner"></div>
+
+  <!-- Map Section -->
+  <div id="map"></div>
+
+  <!-- Back to Home Button -->
+  <a href="Home.html" class="back-to-home">กลับสู่หน้าแรก</a>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script>
+    // Venue data
+    const venueData = [
+      ["The Column", "เมืองภูเก็ต", 7.883811793703082, 98.38873743729233],
+      ["เสวนา", "เมืองภูเก็ต", 7.884609930718579, 98.3909275242056],
+      ["เพลินจิต", "เมืองภูเก็ต", 7.880023687671387, 98.39770012605712],
+      ["Sugar Club Phuket", "เมืองภูเก็ต", 7.893325299036118, 98.29754938002708],
+      ["Barfunk Phuket", "เมืองภูเก็ต", 7.894001198583541, 98.29622947817617],
+      ["Moulin Rouge Phuket", "เมืองภูเก็ต", 7.894095605125771, 98.29599314193666],
+      ["Lilly's Aussie Bar", "เมืองภูเก็ต", 7.886915793900043, 98.29545316653464],
+      ["Zimplex Mixology Laboratory", "เมืองภูเก็ต", 7.88296085885474, 98.39811578002704],
+      ["Quip Sky Bar", "เมืองภูเก็ต", 7.886604919271686, 98.3883309966314],
+      ["Sally", "เมืองภูเก็ต", 7.884385048555383, 98.39086505119111]
+    ];
+
+    // Initialize the map
+    const map = L.map('map').setView([7.8838, 98.3887], 12);
+
+    // Use Tile Layer from OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Show loading spinner while the map loads
+    document.getElementById('loading-spinner').style.display = 'block';
+
+    // Create a marker cluster group
+    const markers = L.markerClusterGroup();
+
+    // Add markers for each venue
+    venueData.forEach(([name, area, lat, lng]) => {
+      const marker = L.marker([lat, lng]).bindPopup(`<b>${name}</b><br>${area}`);
+      markers.addLayer(marker);
+    });
+
+    // Add the marker cluster group to the map
+    map.addLayer(markers);
+
+    // Hide loading spinner when map is fully loaded
+    map.on('load', function() {
+      document.getElementById('loading-spinner').style.display = 'none';
+    });
+
+    // Ensure spinner is hidden if the map fails to load
+    map.on('error', function() {
+      document.getElementById('loading-spinner').style.display = 'none';
+    });
+
+    // Trigger the load event manually to hide spinner if markers load faster than the map
+    setTimeout(() => {
+      document.getElementById('loading-spinner').style.display = 'none';
+    }, 3000); // ปรับเวลา timeout ถ้าจำเป็น
+  </script>
+
+</body>
+</html>

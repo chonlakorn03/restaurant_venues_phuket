@@ -1,0 +1,99 @@
+<!-- Review Section for Kanom Jeen Pa Mai -->
+<div class="review-section">
+    <h2>Reviews คุณจี๊ดยอดผัก</h2>
+    
+    <div class="rating">
+        <h3>Rate this restaurant:</h3>
+        <span class="star" onclick="rateRestaurant(1)">&#9733;</span>
+        <span class="star" onclick="rateRestaurant(2)">&#9733;</span>
+        <span class="star" onclick="rateRestaurant(3)">&#9733;</span>
+        <span class="star" onclick="rateRestaurant(4)">&#9733;</span>
+        <span class="star" onclick="rateRestaurant(5)">&#9733;</span>
+        <p>Your rating: <span id="user-rating">0</span></p>
+    </div>
+
+    <form id="review-form" onsubmit="submitReview(event)">
+        <textarea id="review-text" placeholder="Write your review here..." required></textarea>
+        <br>
+        <button type="submit" class="button-custom">Submit Review</button>
+    </form>
+
+    <h3>Customer Reviews</h3>
+    <div id="reviews-container"></div>
+</div>
+
+<style>
+    .review-section {
+        margin: 20px;
+        padding: 20px;
+        background-color: #ffffff; /* White background for reviews */
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .rating {
+        margin-bottom: 20px;
+    }
+    .star {
+        font-size: 24px; /* Size of stars */
+        color: #ffcc00; /* Star color */
+        cursor: pointer; /* Change cursor to pointer on hover */
+    }
+    .star:hover {
+        color: #ffdb70; /* Color change on hover */
+    }
+    #review-text {
+        width: 100%; /* Full width for textarea */
+        height: 100px; /* Fixed height */
+        border-radius: 10px; /* Round corners */
+        border: 1px solid #ddd; /* Light border */
+        padding: 10px; /* Padding inside textarea */
+        margin-bottom: 10px; /* Space below textarea */
+    }
+    #reviews-container {
+        margin-top: 20px;
+    }
+    .review {
+        background-color: #f1f1f1; /* Light grey background for reviews */
+        border-radius: 5px; /* Round corners */
+        padding: 10px;
+        margin-bottom: 10px; /* Space between reviews */
+    }
+</style>
+
+<script>
+    let userRating = 0;
+    const reviews = [];
+
+    function rateRestaurant(rating) {
+        userRating = rating;
+        document.getElementById('user-rating').innerText = userRating;
+        // Optional: you can save this rating to the server or local storage
+    }
+
+    function submitReview(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        const reviewText = document.getElementById('review-text').value;
+
+        // Push the new review into the reviews array
+        reviews.push({ text: reviewText, rating: userRating });
+
+        // Clear the review form
+        document.getElementById('review-form').reset();
+        document.getElementById('user-rating').innerText = 0;
+        userRating = 0;
+
+        // Display the updated reviews
+        displayReviews();
+    }
+
+    function displayReviews() {
+        const reviewsContainer = document.getElementById('reviews-container');
+        reviewsContainer.innerHTML = ''; // Clear existing reviews
+        reviews.forEach((review, index) => {
+            const reviewDiv = document.createElement('div');
+            reviewDiv.className = 'review';
+            reviewDiv.innerHTML = `<strong>Rating: ${review.rating} stars</strong><p>${review.text}</p>`;
+            reviewsContainer.appendChild(reviewDiv);
+        });
+    }
+</script>

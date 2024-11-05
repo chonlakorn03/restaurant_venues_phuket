@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants & Venues Density Map</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Light background color for better contrast */
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333; /* Darker text for better visibility */
+            font-size: 2em; /* Larger font size for the header */
+        }
+        #map-container {
+            width: 90%; /* Set width to 90% of the viewport */
+            max-width: 1200px; /* Max width for larger screens */
+            margin: 20px auto; /* Center the container */
+            background-color: #ffffff; /* White background for the map container */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            padding: 20px; /* Padding inside the container */
+        }
+        #map {
+            width: 100%;
+            height: 600px; /* Height of the map */
+            border: 2px solid #ccc; /* Add a border around the map */
+            border-radius: 8px; /* Rounded corners */
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em; /* Adjust header size for smaller screens */
+            }
+            #map {
+                height: 400px; /* Reduce map height on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Density Map of Restaurants & Venues in Phuket</h1>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <script>
+        // Data for restaurants
+        const restaurantData = [
+            ["โอวต้าวจี้เปี่ยน", "เมืองภูเก็ต", 7.882153165, 98.3875051, 'restaurant'],
+            // ... (Add all your restaurant data)
+        ];
+
+        // Data for venues
+        const venueData = [
+            ["The Column", "เมืองภูเก็ต", 7.883811793703082, 98.38873743729233, 'venue'],
+            // ... (Add all your venue data)
+        ];
+
+        // Function to extract latitude and longitude from data
+        function getCoordinates(data) {
+            const lon = [];
+            const lat = [];
+            for (const entry of data) {
+                lat.push(entry[2]); // Latitude
+                lon.push(entry[3]); // Longitude
+            }
+            return { lat, lon };
+        }
+
+        // Get coordinates for restaurants and venues
+        const restaurantCoords = getCoordinates(restaurantData);
+        const venueCoords = getCoordinates(venueData);
+
+        // Combine all coordinates for the density map
+        const allLat = [...restaurantCoords.lat, ...venueCoords.lat];
+        const allLon = [...restaurantCoords.lon, ...venueCoords.lon];
+
+        // Create density data for Plotly
+        const densityData = [{
+            type: 'densitymapbox',
+            lon: allLon,
+            lat: allLat,
+            z: Array(allLat.length).fill(1), // All values set to 1 for density calculation
+            radius: 50,
+            colorscale: 'YlOrRd',
+            colorbar: {
+                title: 'Density',
+                xanchor: 'left',
+                titleside: 'right'
+            }
+        }];
+
+        // Layout settings for the map
+        const layout = {
+            mapbox: {
+                style: 'open-street-map',
+                center: { lat: 7.883, lon: 98.388 },
+                zoom: 12
+            },
+            width: 800,
+            height: 600,
+            title: 'Density Map of Restaurants & Venues in Phuket'
+        };
+
+        // Initialize the map
+        Plotly.newPlot('map', densityData, layout);
+    </script>
+</body>
+</html>

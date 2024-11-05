@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Phuket Restaurants & Venues</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for readability */
+            font-family: "Raleway", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .hero {
+            background-image: url('path/to/your-hero-image.jpg'); /* Set your hero image */
+            background-size: cover;
+            background-position: center;
+            color: #ffffff; /* White text in hero section */
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 4px solid #ffcc80; /* Bottom border */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px; /* Space below the hero section */
+        }
+        .card-container {
+            display: flex; /* Use flexbox for card layout */
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            justify-content: space-around; /* Space cards evenly */
+            padding: 20px; /* Add padding around the card container */
+        }
+        .card {
+            background-color: #ffffff; /* White card background */
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 15px;
+            padding: 15px;
+            width: 300px; /* Fixed width for cards */
+            text-align: center; /* Center align text in cards */
+            transition: transform 0.2s; /* Smooth hover effect */
+        }
+        .card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+        .card img {
+            width: 100%; /* Full width of the card */
+            border-radius: 12px; /* Round corners for images */
+            max-height: 200px; /* Limit height */
+            object-fit: cover; /* Maintain aspect ratio */
+        }
+        .footer {
+            background-color: #00796b; /* Footer color */
+            color: #ffffff; /* Light footer text */
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            position: relative;
+            bottom: 0; /* Stick to the bottom */
+        }
+        .button-custom {
+            background-color: #ff7043; /* Warm pastel button color */
+            color: white;
+            border: none;
+            border-radius: 25px; /* Rounded button */
+            padding: 10px 20px; /* Padding for buttons */
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold; /* Bold text for buttons */
+            display: inline-block; /* Center align */
+            margin: 5px; /* Margin for button spacing */
+        }
+        .button-custom:hover {
+            background-color: #ff5722; /* Darker color on hover */
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+    </style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-teal w3-large">
+    <span class="w3-bar-item w3-right">Phuket Restaurants & Venues</span>
+</div>
+
+<!-- Hero Section -->
+<div class="hero" style="background-color: #e65100;"> <!-- Dark orange color -->
+    <h1>Welcome to Phuket</h1>
+    <p>Discover the best restaurants and entertainment venues.</p>
+    <a href="Learnmore.html" class="button-custom">Learn More</a>
+</div>
+
+<!-- Card Section -->
+<div class="card-container">
+    <div class="card">
+        <img src="ขนมจีนป้ามัย.jpg" alt="ขนมจีนป้ามัย">
+        <h3>ขนมจีนป้ามัย</h3>
+        <p>สัมผัสรสชาติอันเข้มข้นของน้ำยาขนมจีนสูตรดั้งเดิม พร้อมด้วยเครื่องเคียงสดใหม่ ที่จะทำให้คุณต้องหลงรัก!</p>
+        <p><strong>ที่อยู่:</strong> ถนนสายเขาขาด, ตำบลกะทู้, อำเภอกะทู้, ภูเก็ต</p>
+        <p><strong>เบอร์ติดต่อ:</strong> 012-345-6789</p>
+        <a href="detail_1.html" class="button-custom">ให้คะแนนรีวิว</a>
+    </div>
+    <div class="card">
+        <img src="คุณจี๊ดยอดผัก.jpg" alt="คุณจี๊ดยอดผัก">
+        <h3>คุณจี๊ดยอดผัก</h3>
+        <p>ร้านอาหารที่นำเสนอเมนูผักสดจากฟาร์ม ให้คุณได้สุขภาพดีพร้อมกับความอร่อยในทุกคำ!</p>
+        <p><strong>ที่อยู่:</strong> ซอยม่วง, ตำบลวิชิต, อำเภอเมือง, ภูเก็ต</p>
+        <p><strong>เบอร์ติดต่อ:</strong> 098-765-4321</p>
+        <a href="detail_2.html" class="button-custom">ให้คะแนนรีวิว</a>
+    </div>
+    <div class="card">
+        <img src="หมี่ต้นโพธิ์.jpg" alt="หมี่ต้นโพธิ์">
+        <h3>หมี่ต้นโพธิ์</h3>
+        <p>ร้านหมี่ชื่อดังที่มีสูตรลับเฉพาะ ทำให้ทุกจานเต็มไปด้วยรสชาติและกลิ่นหอมที่ยากจะลืม!</p>
+        <p><strong>ที่อยู่:</strong> ถนนเส้นปลา, ตำบลตลาดใหญ่, อำเภอเมือง, ภูเก็ต</p>
+        <p><strong>เบอร์ติดต่อ:</strong> 087-654-3210</p>
+        <a href="detail_3.html" class="button-custom">ให้คะแนนรีวิว</a>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<div class="footer">
+    <p>&copy; 2024 Phuket Restaurants & Venues. All rights reserved.</p>
+</div>
+
+</body>
+</html>

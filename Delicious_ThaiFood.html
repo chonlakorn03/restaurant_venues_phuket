@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แนะนำร้านอาหารไทยที่อร่อย</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to bottom, #f8f9fa, #e2e2e2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .restaurant-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .restaurant-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+        }
+        .restaurant-card img {
+            width: 100%;
+            height: 200px; /* Set a fixed height for uniformity */
+            object-fit: cover; /* Maintain aspect ratio and cover the space */
+        }
+        .restaurant-card h2 {
+            margin: 0;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            text-align: center; /* Center text for better presentation */
+        }
+        .restaurant-card p {
+            padding: 15px;
+            color: #555;
+            text-align: center; /* Center text for consistency */
+        }
+        .map-link {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #28a745; /* Green background for map link */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .map-link:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>แนะนำร้านอาหารไทยที่อร่อยในภูเก็ต</h1>
+    <div class="restaurant-list">
+        <div class="restaurant-card">
+            <img src="OTaoChiPian.jpg" alt="โอวต้าวจี้เปี่ยน">
+            <h2>โอวต้าวจี้เปี่ยน</h2>
+            <p>ร้านอาหารไทยที่มีชื่อเสียงด้านขนมจีนน้ำยาและมีบรรยากาศสบายๆ เหมาะสำหรับครอบครัว</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=โอวต้าวจี้เปี่ยน" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="Chomchan.jpg" alt="ร้านชมจันทร์">
+            <h2>ร้านชมจันทร์</h2>
+            <p>เสิร์ฟอาหารไทยที่อร่อยในบรรยากาศโรแมนติก พร้อมวิวทะเลที่สวยงาม</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ร้านชมจันทร์" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="OneChun.jpg" alt="ร้านวันจันทร์">
+            <h2>ร้านวันจันทร์</h2>
+            <p>มีเมนูอาหารไทยหลากหลายและบริการที่เป็นมิตร เหมาะสำหรับการสังสรรค์กับเพื่อน</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ร้านวันจันทร์" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="KhunYaiChian .jpg" alt="หมี่สะปำคุณยายเจียร">
+            <h2>หมี่สะปำคุณยายเจียร</h2>
+            <p>ชื่อเสียงด้านหมี่สะปำที่อร่อยและเครื่องเคียงต่างๆ ที่ทำให้คุณต้องกลับมาอีกครั้ง</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=หมี่สะปำคุณยายเจียร" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="KaNomJeenPaMai.jpg" alt="ขนมจีนป้ามัย">
+            <h2>ขนมจีนป้ามัย</h2>
+            <p>ร้านขนมจีนที่มีน้ำยาหลายแบบให้เลือก โดยเฉพาะน้ำยากะทิที่ได้รับความนิยมสูง</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ขนมจีนป้ามัย" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="Kanomjean_Saphanhin.jpg" alt="ขนมจีนสะพานหิน">
+            <h2>ขนมจีนสะพานหิน</h2>
+            <p>มีขนมจีนที่รสชาติดีและเป็นที่รู้จักในท้องถิ่น เสิร์ฟพร้อมเครื่องเคียงที่สดใหม่</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ขนมจีนสะพานหิน" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="KoAng_Seafood.jpg" alt="โกอ่างซีฟู๊ด">
+            <h2>โกอ่างซีฟู๊ด</h2>
+            <p>ร้านซีฟู้ดสดใหม่ที่มีเมนูอร่อยและบริการที่รวดเร็ว</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=โกอ่างซีฟู๊ด" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="Khunjeedyodpak.jpg" alt="คุณจี๊ดยอดผัก">
+            <h2>คุณจี๊ดยอดผัก</h2>
+            <p>เน้นเมนูเพื่อสุขภาพ ด้วยผักสดจากฟาร์ม พร้อมน้ำจิ้มรสเด็ด</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=คุณจี๊ดยอดผัก" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="MooKrob_JiHong.jpg" alt="ร้านหมูกรอบ จี้ฮอง">
+            <h2>ร้านหมูกรอบ จี้ฮอง</h2>
+            <p>ร้านชื่อดังสำหรับหมูกรอบที่มีรสชาติกรอบอร่อย ที่คุณต้องลอง</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ร้านหมูกรอบ จี้ฮอง" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="LhongKhao.jpg" alt="ล้งข้าว">
+            <h2>ล้งข้าว</h2>
+            <p>ร้านอาหารไทยที่ให้บริการข้าวสวยร้อนๆ กับเมนูอร่อยมากมาย</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ล้งข้าว" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="TaiTonMamuang.jpg" alt="ร้านใต้ต้นมะม่วงภูเก็ต">
+            <h2>ร้านใต้ต้นมะม่วงภูเก็ต</h2>
+            <p>ร้านที่ให้บรรยากาศร่มรื่นใต้ต้นมะม่วง เสิร์ฟอาหารไทยแบบดั้งเดิม</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ร้านใต้ต้นมะม่วงภูเก็ต" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="KhaoRang_RiceSoup.jpg" alt="ข้าวต้มเขารัง">
+            <h2>ข้าวต้มเขารัง</h2>
+            <p>ร้านข้าวต้มที่มีเมนูพิเศษต่างๆ ให้เลือก พร้อมรสชาติที่กลมกล่อม</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ข้าวต้มเขารัง" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="Maimorn_Forest.jpg" alt="ไม้หมอน ฟอเรสต์">
+            <h2>ไม้หมอน ฟอเรสต์</h2>
+            <p>สัมผัสบรรยากาศธรรมชาติที่ร้านไม้หมอน พร้อมอาหารอร่อย</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ไม้หมอน ฟอเรสต์" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="Meetonpoe .jpg" alt="หมี่ต้นโพธิ์ ภูเก็ต">
+            <h2>หมี่ต้นโพธิ์ ภูเก็ต</h2>
+            <p>ร้านหมี่ที่มีเอกลักษณ์เฉพาะตัว เสิร์ฟพร้อมน้ำซุปเข้มข้น</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=หมี่ต้นโพธิ์" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+        <div class="restaurant-card">
+            <img src="KhaoKhaMu.jpg" alt="ขาหมูโบราณ">
+            <h2>ขาหมูโบราณ</h2>
+            <p>ร้านขาหมูที่มีสูตรดั้งเดิม รับประกันความอร่อยทุกจาน</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=ขาหมูโบราณ" target="_blank" class="map-link">ดูบนแผนที่</a>
+        </div>
+    </div>
+</body>
+</html>

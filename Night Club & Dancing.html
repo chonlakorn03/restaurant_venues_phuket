@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แนะนำสถานบันเทิงในภูเก็ต</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #e9ecef, #f8f9fa);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .venue-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .venue-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .venue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+        }
+        .venue-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .venue-card h2 {
+            margin: 0;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+        }
+        .venue-card p {
+            padding: 0 15px 15px;
+            color: #555;
+            text-align: center;
+        }
+        .button {
+            display: block;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin: 15px auto;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            width: 80%;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>สถานบันเทิงแนะนำในภูเก็ต</h1>
+    <div class="venue-list">
+        <div class="venue-card">
+            <img src="D:\mobile\project\Sugar Club Phuket.jpg" alt="Sugar Club Phuket">
+            <h2>Sugar Club Phuket</h2>
+            <p>สถานบันเทิงที่มีดนตรีสดและบรรยากาศที่ดี</p>
+            <a href="Sugar_Club_Phuket.html" class="button">ดูเพิ่มเติม</a>
+        </div>
+        
+        <div class="venue-card">
+            <img src="D:\mobile\project\Barfunk Phuket.jpg" alt="Barfunk Phuket">
+            <h2>Barfunk Phuket</h2>
+            <p>บาร์ที่มีค็อกเทลและเครื่องดื่มหลากหลาย</p>
+            <a href="Barfunk_Phuket.html" class="button">ดูเพิ่มเติม</a>
+        </div>
+    </div>
+</body>
+</html>

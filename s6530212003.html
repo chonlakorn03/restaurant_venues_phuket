@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phuket Restaurants & Venues</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <style>
+        /* General Styles */
+        html, body, h1, h2, h3, h4, h5 {
+            font-family: "Raleway", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Sidebar Styles */
+        .w3-sidebar {
+            border-right: 1px solid #ccc;
+        }
+
+        .sidebar-item {
+            padding: 15px 20px;
+            font-size: 1.1em;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar-item:hover {
+            background-color: #d9e8e6;
+            color: #000;
+        }
+
+        /* Map Styles */
+        #map {
+            height: 400px;
+            width: 100%;
+            border: 1px solid darkslategrey;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        /* Featured Places Section */
+        .featured-place {
+            display: flex;
+            align-items: center;
+            margin: 15px 0; /* More spacing between featured places */
+        }
+
+        .featured-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid #ccc; /* Border for images */
+        }
+
+        .featured-details {
+            flex: 1; /* Allow details section to grow */
+        }
+
+        .featured-details h6 {
+            margin: 0; /* Remove default margin */
+            font-size: 1.2em; /* Adjust font size */
+        }
+
+        .featured-details p {
+            margin: 5px 0; /* Add margin for spacing */
+            color: #555; /* Slightly darker color for better readability */
+        }
+
+        /* Chart Section */
+        #venueChart {
+            max-width: 600px;
+            margin: 20px auto; /* Center align the chart */
+        }
+
+        /* Info Panel Styles */
+        .info-panel {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button Styles */
+        .w3-button {
+            margin: 5px;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large">
+    <span class="w3-bar-item w3-right">Phuket Restaurants & Venues</span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="width:300px;" id="mySidebar">
+    <div class="w3-container w3-row">
+        <h5>Search</h5>
+        <input type="text" id="search" class="search-bar" placeholder="ค้นหาชื่อสถานที่..." oninput="filterLocations()">
+    </div>
+    <div id="results"></div>
+    
+    <hr>
+    <div class="w3-bar-block" id="locationList">
+        <a href="Home.html" class="w3-bar-item w3-button sidebar-item hover-effect">Home</a>
+        <a href="restaurants.html" class="w3-bar-item w3-button sidebar-item hover-effect">Restaurants</a>
+        <a href="venues.html" class="w3-bar-item w3-button sidebar-item hover-effect">Venues</a>
+        <a href="Map_Overview.html" class="w3-bar-item w3-button sidebar-item hover-effect">Map Overview</a>
+        <a href="Restaurants & Venues Graph.html" class="w3-bar-item w3-button sidebar-item hover-effect">Restaurants & Venues Graph</a>
+    </div>
+</nav>
+
+<!-- Main content -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-dashboard"></i> Restaurants and Venues</b></h5>
+    </header>
+
+    <!-- Filter Buttons -->
+    <div class="w3-container w3-center">
+        <a href="https://www.google.com/maps/search/?api=1&query=restaurants+in+Phuket" target="_blank" class="w3-button w3-teal">View Restaurants on Map</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=entertainment+venues+in+Phuket" target="_blank" class="w3-button w3-deep-orange">View Venues on Map</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Phuket" target="_blank" class="w3-button w3-blue">View All on Map</a>
+    </div>
+    
+    <!-- Map Section -->
+    <div id="map-overview" class="map-panel w3-panel w3-border w3-round-large">
+        <h5 class="map-title">Explore Our Location</h5>
+        <div id="map" class="map-container">
+            <div class="loading-spinner" id="loading-spinner"></div>
+            <div class="map-content" id="map-content">[Loading map...]</div>
+        </div>
+    </div>
+
+    <!-- Featured Places Section -->
+    <div class="w3-panel w3-border w3-round-large w3-white">
+        <h5>Featured Places</h5>
+        <div class="featured-place">
+            <img src="ส้มตำ ยำ เผา.jpg" alt="ร้านอาหาร ส้มตำ ยำ เผา" class="featured-image">
+            <div class="featured-details">
+                <h6>ส้มตำ ยำ เผา</h6>
+                <p>ประทับใจกับรสชาติที่เหนือชั้นและบรรยากาศที่อบอุ่นที่จะทำให้ทุกมื้ออาหารน่าจดจำ</p>
+                <a href="view_res.html" class="w3-button w3-teal w3-small">View Details</a>
+            </div>
+        </div>
+        <div class="featured-place">
+            <img src="Sally.jpg" alt="สถานที่ Sally" class="featured-image">
+            <div class="featured-details">
+                <h6>Sally</h6>
+                <p>สัมผัสประสบการณ์ที่น่าจดจำกับกิจกรรมและสถานที่ท่องเที่ยวที่มีชีวิตชีวาที่สถานที่ยอดนิยมแห่งนี้</p>
+                <a href="view_venues.html" class="w3-button w3-teal w3-small">View Details</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section: Percentage Distribution -->
+    <div class="w3-panel w3-border w3-round-large w3-white">
+        <h5>Percentage Distribution of Restaurants and Entertainment Venues</h5>
+        <canvas id="venueChart" style="width:100%;max-width:600px"></canvas>
+    </div>
+
+    <!-- Information Panel -->
+    <div id="info-panel" class="info-panel w3-border w3-round-large w3-white" style="display:none;">
+        <h5>Place Information</h5>
+        <div id="place-info"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">Back to Top</button>
+</div>
+
+<script>
+// JavaScript for Map and Chart Initialization
+// Add your JavaScript code here
+// Initialize the map
+const map = L.map('map').setView([7.8804, 98.3923], 12);
+
+// Load and display tile layers on the map
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+// Add markers for featured restaurants
+const restaurantMarkers = [
+    { name: "ส้มตำ ยำ เผา", lat: 7.8794, lng: 98.3928 },
+    { name: "Sally", lat: 7.8834, lng: 98.3918 }
+];
+
+restaurantMarkers.forEach(restaurant => {
+    L.marker([restaurant.lat, restaurant.lng]).addTo(map)
+        .bindPopup(restaurant.name)
+        .openPopup();
+});
+
+// Initialize the chart
+const ctx = document.getElementById('venueChart').getContext('2d');
+const venueChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Restaurants', 'Entertainment Venues'],
+        datasets: [{
+            label: 'Distribution',
+            data: [60, 40], // Example data
+            backgroundColor: ['#FF6384', '#36A2EB'],
+            borderColor: '#fff',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        legend: {
+            position: 'top',
+        },
+        title: {
+            display: true,
+            text: 'Percentage Distribution of Restaurants and Entertainment Venues'
+        }
+    }
+});
+
+// Back to Top Button Visibility
+window.onscroll = function() {
+    const button = document.getElementById("backToTop");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        button.style.display = "block";
+    } else {
+        button.style.display = "none";
+    }
+};
+
+function scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Filter locations based on search input
+function filterLocations() {
+    const input = document.getElementById('search').value.toLowerCase();
+    const locationList = document.getElementById('locationList');
+    const results = locationList.getElementsByTagName('a');
+
+    for (let i = 0; i < results.length; i++) {
+        const item = results[i].textContent || results[i].innerText;
+        if (item.toLowerCase().indexOf(input) > -1) {
+            results[i].style.display = "";
+        } else {
+            results[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+</body>
+</html>

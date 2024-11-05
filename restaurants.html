@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แผนที่ร้านอาหารภูเก็ต</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <style>
+    /* สไตล์พื้นฐาน */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    /* สไตล์ส่วนหัว */
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* สไตล์แผนที่ */
+    #map {
+      height: 600px;
+      width: 90%;
+      max-width: 1000px;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* สไตล์ป๊อปอัพ */
+    .leaflet-popup-content-wrapper {
+      background-color: #fff;
+      font-size: 16px;
+      color: #333;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    /* สไตล์ปุ่มซูม */
+    .leaflet-control-zoom {
+      border-radius: 4px;
+    }
+
+    /* สไตล์ปุ่มกลับหน้าโฮม */
+    .home-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 18px;
+      color: white;
+      background-color: #28a745; /* สีเขียว */
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    .home-button:hover {
+      background-color: #218838; /* สีเขียวเข้มเมื่อเอาเมาส์ไปวาง */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ส่วนหัว -->
+  <header>
+    แผนที่ร้านอาหารในภูเก็ต
+  </header>
+
+  <!-- แผนที่ -->
+  <div id="map"></div>
+
+  <!-- ปุ่มกลับหน้าโฮม -->
+  <a href="Home.html" class="home-button">กลับสู่หน้าแรก</a>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script>
+    // ข้อมูลร้านอาหาร
+    const restaurantData = [
+      ["โอวต้าวจี้เปี่ยน", "เมืองภูเก็ต", 7.882153165, 98.3875051, 'restaurant'],
+      ["ร้านชมจันทร์", "เมืองภูเก็ต", 7.900731003, 98.38192623, 'restaurant'],
+      ["ร้านวันจันทร์", "เมืองภูเก็ต", 7.889804874, 98.39145331, 'restaurant'],
+      ["หมี่สะปำคุณยายเจียร", "เมืองภูเก็ต", 7.951523472, 98.39213996, 'restaurant'],
+      ["ขนมจีนป้ามัย", "เมืองภูเก็ต", 7.890655056, 98.38493018, 'restaurant'],
+      ["ขนมจีนสะพานหิน", "เมืองภูเก็ต", 7.871440534, 98.39660315, 'restaurant'],
+      ["โกอ่างซีฟู๊ด", "เมืองภูเก็ต", 7.884363673, 98.39128165, 'restaurant'],
+      ["คุณจี๊ดยอดผัก", "เมืองภูเก็ต", 7.881473006, 98.39385657, 'restaurant'],
+      ["ร้านหมูกรอบ จี้ฮอง", "เมืองภูเก็ต", 7.887594395, 98.37875037, 'restaurant'],
+      ["ล้งข้าว", "เมืองภูเก็ต", 7.886744208, 98.39076667, 'restaurant'],
+      ["ร้านใต้ต้นมะม่วงภูเก็ต", "เมืองภูเก็ต", 7.889804874, 98.39591651, 'restaurant'],
+      ["ข้าวต้มเขารัง", "เมืองภูเก็ต", 7.892185377, 98.38098197, 'restaurant'],
+      ["ไม้หมอน ฟอเรสต์", "เมืองภูเก็ต", 7.88562122, 98.3949739, 'restaurant'],
+      ["หมี่ต้นโพธิ์ ภูเก็ต", "เมืองภูเก็ต", 7.881795345, 98.39222731, 'restaurant'],
+      ["ขาหมูโบราณ", "กะทู้", 7.915899063, 98.33329462, 'restaurant'],
+      ["ครัวจงจิต", "กะทู้", 7.918115202, 98.34682324, 'restaurant'],
+      ["เก็ตโฮ่ ติ่มซำ", "กะทู้", 7.90594911, 98.35274736, 'restaurant'],
+      ["นายดำ ภูเก็ต", "กะทู้", 7.912343589, 98.33596114, 'restaurant'],
+      ["ร้านหอยป้ายแดง", "กะทู้", 7.901731735, 98.34802485, 'restaurant'],
+      ["อีสานรสเด็ด", "กะทู้", 7.92081787, 98.33154274, 'restaurant'],
+      ["ร้านเหลือง", "กะทู้", 7.905251111, 98.34646025, 'restaurant'],
+      ["ครัว หวาน ใจ", "กะทู้", 7.924773695, 98.3569628, 'restaurant'],
+      ["มุมโปรด โภชนา", "กะทู้", 7.915932456, 98.34391654, 'restaurant'],
+      ["Rim Talay", "ป่าตอง", 7.889170296, 98.28398287, 'restaurant'],
+      ["ข้าวมันไก่ไบรเล่ย์", "ป่าตอง", 7.901323788, 98.30571612, 'restaurant'],
+      ["ร้านอาหารกะหลิมริมเล", "ป่าตอง", 7.920133894, 98.28882903, 'restaurant'],
+      ["ร้านอาหารแดง", "ป่าตอง", 7.901090776, 98.29912871, 'restaurant'],
+      ["Siam Thai", "ป่าตอง", 7.897009993, 98.29432219, 'restaurant'],
+      ["ครัวโกเล็ก", "ป่าตอง", 7.897690127, 98.30118865, 'restaurant'],
+      ["บ้านริมผา", "ป่าตอง", 7.922854268, 98.28402251, 'restaurant'],
+      ["The Kitchen", "ป่าตอง", 7.900750712, 98.29844206, 'restaurant'],
+      ["ร้านหลบมุม", "ป่าตอง", 7.883747172, 98.3080551, 'restaurant'],
+      ["กาบกล้วย", "ป่าตอง", 7.913672935, 98.31080168, 'restaurant'],
+      ["Mangal restaurant", "ป่าตอง", 7.901090776, 98.2974121, 'restaurant'],
+      ["ชาร์ลี บิสโทร", "ป่าตอง", 7.907211874, 98.29947203, 'restaurant'],
+      ["Baan Thai Seafood", "ป่าตอง", 7.911632611, 98.30118865, 'restaurant'],
+      ["ส้มตำ ยำ เผา", "ป่าตอง", 7.918773701, 98.29432219, 'restaurant'],
+      ["ครัวคุณต๋อย", "ป่าตอง", 7.910612445, 98.30599516, 'restaurant'],
+      ["Jay Boo's", "ป่าตอง", 7.922854268, 98.29157561, 'restaurant'],
+      ["Tang Toh", "ฉลอง", 7.844706836, 98.33338919, 'restaurant'],
+      ["Baan Noy Restaurant", "ฉลอง", 7.855240203, 98.34402002, 'restaurant'],
+      ["Bistro N", "ฉลอง", 7.857453278, 98.34025088, 'restaurant'],
+      ["Taste of Thailand", "ฉลอง", 7.844706836, 98.32801873, 'restaurant'],
+      ["ร้านอาหารริมทะเล", "ฉลอง", 7.867456556, 98.33596114, 'restaurant'],
+      ["Taste of Thai", "ฉลอง", 7.860251174, 98.33910389, 'restaurant'],
+      ["โจ๊กหน้าร้าน", "ฉลอง", 7.83540914, 98.33533482, 'restaurant'],
+      ["Seaside Kitchen", "ฉลอง", 7.842882469, 98.33187588, 'restaurant'],
+      ["อาหารจานเดียว", "ฉลอง", 7.85521359, 98.33933089, 'restaurant'],
+      ["The Cliff", "ฉลอง", 7.848673344, 98.32720635, 'restaurant'],
+      ["ร้านผัดไทย", "ฉลอง", 7.860675106, 98.32801873, 'restaurant'],
+      ["หลบมุม", "ฉลอง", 7.852497576, 98.32720635, 'restaurant'],
+      ["ครัวคุณพ่อ", "ฉลอง", 7.853233303, 98.32801873, 'restaurant'],
+      ["Food Truck", "ฉลอง", 7.853233303, 98.33255718, 'restaurant'],
+      ["ครัวบ้านฉลอง", "ฉลอง", 7.85004955, 98.33255718, 'restaurant'],
+      ["Bistro N", "ฉลอง", 7.861007356, 98.33508473, 'restaurant']
+    ];
+
+    // กำหนดตำแหน่งเริ่มต้นของแผนที่
+    const map = L.map('map').setView([7.8804, 98.3923], 12);
+
+    // เพิ่ม Tile Layer ของ OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Create a marker cluster group
+    const markers = L.markerClusterGroup();
+
+    // วนลูปข้อมูลร้านอาหารและสร้าง Marker สำหรับแต่ละตำแหน่ง
+    restaurantData.forEach(([name, area, lat, lng]) => {
+      const marker = L.marker([lat, lng]).bindPopup(`<b>${name}</b><br>${area}`);
+      markers.addLayer(marker);
+    });
+
+    // Add the marker cluster to the map
+    map.addLayer(markers);
+
+    // Create a legend
+    const legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML += '<h4>ประเภท</h4>';
+      div.innerHTML += '<i style="background: red"></i><span>อาหารทะเล</span><br>';
+      div.innerHTML += '<i style="background: blue"></i><span>อาหารท้องถิ่น</span><br>';
+      div.innerHTML += '<i style="background: green"></i><span>อื่น ๆ</span><br>';
+      return div;
+    };
+    legend.addTo(map);
+  </script>
+
+</body>
+</html>
